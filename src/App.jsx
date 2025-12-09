@@ -8,6 +8,7 @@ import Login from "./auth/Login";
 import Register from "./auth/Register";
 import Edit from "./routes/Edit";
 import Navbar from "./components/Navbar";
+import ProductCard from "./components/ProductCard/ProductCard";
 
 function App() {
     return (
