@@ -201,7 +201,7 @@ export default function Catalog({products, gender}) {
                     {filteredProducts.map((product) => (
                         <ProductCard key={product.id} product={product} />
                     ))}
-                    {/* Duplicating products to fill grid like your screenshot */}
+                    {/* Creating more cards */}
                     {filteredProducts.map((product) => (
                         <ProductCard
                             key={`copy-${product.id}`}

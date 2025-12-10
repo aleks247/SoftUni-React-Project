@@ -1,4 +1,3 @@
-/* --- CONTAINER --- */
 .container {
   width: 92%;
   max-width: 1600px;
@@ -14,8 +13,7 @@
   padding: 15px 30px;
   border-radius: 50px;
   display: flex;
-  align-items: center; /* Vertical Center */
-  /* Remove justify-content: space-between to allow manual spacing */
+  align-items: center;
   box-shadow: 0 4px 20px rgba(0,0,0,0.03);
   transition: background-color 0.3s ease, padding 0.3s ease;
 }
@@ -32,7 +30,6 @@
 .container.scrolled .hamburger span { background-color: #FFFFFF; }
 .container.scrolled .cartBadge { border-color: var(--primary-black); }
 
-/* In dark mode, profile button changes */
 .container.scrolled .profileTrigger {
   color: #FFFFFF;
   border-color: rgba(255,255,255,0.2);
@@ -47,7 +44,6 @@
   background-color: rgba(255,255,255,0.15);
 }
 
-/* --- BRAND --- */
 .brand {
   font-size: 20px;
   font-weight: 800;
@@ -56,20 +52,17 @@
   text-decoration: none;
   z-index: 51;
   transition: color 0.3s;
-  /* Ensures brand stays left */
   margin-right: 20px; 
 }
 
-/* --- NAV LINKS (Centered group moved to Right) --- */
 .navLinks {
   display: flex;
   gap: 8px;
   align-items: center;
   height: 100%;
   
-  /* KEY CHANGE: Push everything to the right */
   margin-left: auto; 
-  margin-right: 20px; /* Space between links and cart */
+  margin-right: 20px; 
 }
 
 .link {

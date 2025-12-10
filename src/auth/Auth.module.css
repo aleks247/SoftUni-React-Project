@@ -1,18 +1,16 @@
-/* Matches the global 'Main Card' design */
 .container {
   background-color: #FFFFFF;
   width: 92%;
-  max-width: 1400px; /* Slightly narrower than catalog for focus */
+  max-width: 1400px;
   border-radius: 24px;
   min-height: 80vh;
   box-shadow: 0 10px 40px rgba(0,0,0,0.04);
-  overflow: hidden; /* Important for the split image */
+  overflow: hidden;
   display: flex;
   margin: 0 auto;
   position: relative;
 }
 
-/* --- Left Side: Image --- */
 .imageSection {
   width: 50%;
   background-color: #F4F4F4;
@@ -25,14 +23,12 @@
   object-fit: cover;
 }
 
-/* Overlay to ensure text/logo pops if needed, or just aesthetic */
 .imageOverlay {
   position: absolute;
   top: 0; left: 0; width: 100%; height: 100%;
   background: rgba(0,0,0,0.1);
 }
 
-/* --- Right Side: Form --- */
 .formSection {
   width: 50%;
   padding: 80px 100px;
@@ -141,7 +137,6 @@
   margin-left: 5px;
 }
 
-/* --- RESPONSIVE --- */
 @media (max-width: 1024px) {
   .formSection { padding: 60px; }
 }

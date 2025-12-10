@@ -2,12 +2,11 @@ import { Link } from "react-router";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import styles from "./Home.module.css";
 
-export default function Home({products}) {
+export default function Home({ products }) {
     const trendingProducts = products.slice(0, 3);
 
     return (
         <div className={styles["container"]}>
-            {/* Hero Section */}
             <section className={styles["hero"]}>
                 <div className={styles["heroContent"]}>
                     <span className={styles["heroLabel"]}>
@@ -38,7 +37,6 @@ export default function Home({products}) {
                 </div>
 
                 <div className={styles["heroImage"]}>
-                    {/* Fallback to real image if you have one, or SVG if not */}
                     <img
                         src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1000&q=80"
                         alt="Hero Model"
@@ -47,7 +45,6 @@ export default function Home({products}) {
                 </div>
             </section>
 
-            {/* Bento Grid Categories */}
             <section className={styles["section"]}>
                 <div className={styles["sectionHeader"]}>
                     <h2 className={styles["sectionTitle"]}>Shop by Category</h2>
@@ -67,7 +64,6 @@ export default function Home({products}) {
                 </div>
 
                 <div className={styles["bentoGrid"]}>
-                    {/* Large Item - New Arrivals */}
                     <Link
                         to="/catalog"
                         className={`${styles["bentoItem"]} ${styles["textWhite"]}`}
@@ -87,13 +83,12 @@ export default function Home({products}) {
                         </div>
                     </Link>
 
-                    {/* Small Item 1 - Women */}
                     <Link to="/catalog" className={styles["bentoItem"]}>
                         <img
                             src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=600&q=80"
                             alt="Women"
                             className={styles["bentoBg"]}
-                            style={{ opacity: 0.1 }} // Faded background example
+                            style={{ opacity: 0.1 }}
                         />
                         <div className={styles["bentoContent"]}>
                             <h3 className={styles["bentoTitle"]}>Women</h3>
@@ -101,7 +96,6 @@ export default function Home({products}) {
                         </div>
                     </Link>
 
-                    {/* Small Item 2 - Men */}
                     <Link to="/catalog" className={styles["bentoItem"]}>
                         <img
                             src="https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?auto=format&fit=crop&w=600&q=80"
@@ -117,20 +111,17 @@ export default function Home({products}) {
                 </div>
             </section>
 
-            {/* Trending Products Grid */}
             <section className={styles["section"]} style={{ paddingTop: 0 }}>
                 <div className={styles["sectionHeader"]}>
                     <h2 className={styles["sectionTitle"]}>Trending Now</h2>
                 </div>
                 <div className={styles["trendingGrid"]}>
-                    {/* This uses the Global ProductCard component, so it will inherit images automatically */}
                     {trendingProducts.map((p) => (
                         <ProductCard key={p.id} product={p} />
                     ))}
                 </div>
             </section>
 
-            {/* Newsletter Section */}
             <div className={styles["newsletter"]}>
                 <h2>Join the Club</h2>
                 <p>

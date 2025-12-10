@@ -1,23 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router';
 import { useCart } from '../../contexts/CartContext';
 import styles from './ProductDetails.module.css';
 
-const ProductDetails = ({products}) => {
+export default function ProductDetails({products}) {
     const { id } = useParams();
     const { addToCart } = useCart();
     
     const [product, setProduct] = useState(null);
     const [mainImage, setMainImage] = useState("");
+
     // #TODO makewhen you refresh to show the product
+
     useEffect(() => {
-        // Find product by ID from URL
-        // parseInt because params are strings, ids are numbers
         const found = products.find(p => p.id === parseInt(id));
         
         if (found) {
             setProduct(found);
-            // Default image is the first one in the array
             setMainImage(found.images?.[0] || found.image || "");
         }
     }, [id]);
@@ -31,10 +30,9 @@ const ProductDetails = ({products}) => {
         );
     }
 
-    // Handle Fallback for images
     const images = product.images && product.images.length > 0 
         ? product.images 
-        : [product.image]; // Fallback to single image string if array missing
+        : [product.image]; 
 
     return (
         <div className={styles.container}>
@@ -57,7 +55,6 @@ const ProductDetails = ({products}) => {
                 </div>
             </div>
 
-            {/* RIGHT: INFO */}
             <div className={styles.info}>
                 <div className={styles.breadcrumb}>
                     <Link to="/catalog" style={{textDecoration:'none', color:'inherit'}}>Catalog</Link> / {product.category || 'Clothing'}
@@ -68,7 +65,6 @@ const ProductDetails = ({products}) => {
 
                 <p className={styles.description}>{product.desc}</p>
 
-                {/* Dummy Color Selector */}
                 <div className={styles.selectorGroup}>
                     <span className={styles.label}>Color</span>
                     <div className={styles.colorOptions}>
@@ -78,7 +74,6 @@ const ProductDetails = ({products}) => {
                     </div>
                 </div>
 
-                {/* Dummy Size Selector */}
                 <div className={styles.selectorGroup}>
                     <span className={styles.label}>Size</span>
                     <div className={styles.sizeOptions}>
@@ -101,5 +96,3 @@ const ProductDetails = ({products}) => {
         </div>
     );
 };
-
-export default ProductDetails;

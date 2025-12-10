@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router"; // Import Link
+import { Link } from "react-router";
 import styles from "./ProductCard.module.css";
 import { useCart } from "../../contexts/CartContext";
 
@@ -8,26 +8,37 @@ export default function ProductCard({ product }) {
     const { addToCart } = useCart();
 
     const handleAddToCart = (e) => {
-        e.preventDefault(); 
-        e.stopPropagation(); // Stop the click from triggering the Link
+        e.preventDefault();
+        e.stopPropagation();
         addToCart(product);
     };
 
     return (
-        <Link to={`/catalog/${product.id}`} className={styles["card"]} style={{textDecoration:'none'}}>
-            
+        <Link
+            to={`/catalog/${product.id}`}
+            className={styles["card"]}
+            style={{ textDecoration: "none" }}
+        >
             <div className={styles["imgWrapper"]}>
-                {product.tag && <div className={styles["tag"]}>{product.tag}</div>}
-                
+                {product.tag && (
+                    <div className={styles["tag"]}>{product.tag}</div>
+                )}
+
                 {product.image && !imageError ? (
-                    <img 
-                       src={product.image} 
-                       alt={product.name} 
-                       className={styles["productImg"]} 
-                       onError={() => setImageError(true)} 
+                    <img
+                        src={product.image}
+                        alt={product.name}
+                        className={styles["productImg"]}
+                        onError={() => setImageError(true)}
                     />
                 ) : (
-                    <svg width="60" height="60" viewBox="0 0 24 24" fill="currentColor" style={{ opacity: 0.1 }}>
+                    <svg
+                        width="60"
+                        height="60"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        style={{ opacity: 0.1 }}
+                    >
                         <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0 2-.9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
                     </svg>
                 )}
@@ -36,11 +47,16 @@ export default function ProductCard({ product }) {
             <div className={styles["info"]}>
                 <h3>{product.name}</h3>
                 <div className={styles["desc"]}>{product.desc}</div>
-                
+
                 <div className={styles["footer"]}>
-                    <div className={styles["price"]}>${product.price.toFixed(2)}</div>
-                    
-                    <button onClick={handleAddToCart} className={styles["addBtn"]}>
+                    <div className={styles["price"]}>
+                        ${product.price.toFixed(2)}
+                    </div>
+
+                    <button
+                        onClick={handleAddToCart}
+                        className={styles["addBtn"]}
+                    >
                         Add to cart
                     </button>
                 </div>

@@ -1,7 +1,7 @@
 import { useAuth } from '../contexts/AuthContext';
 import { useState } from 'react';
 import { Link } from 'react-router';
-import styles from './Auth.module.css'; // Make sure you have this CSS file
+import styles from './Auth.module.css'; 
 
 export default function Login() {
     const { loginSubmitHandler } = useAuth();
@@ -18,7 +18,6 @@ export default function Login() {
 
     return (
         <div className={styles['container']}>
-            {/* Left Side: Image */}
             <div className={styles['imageSection']}>
                 <img 
                     src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=1000&q=80" 
@@ -28,14 +27,12 @@ export default function Login() {
                 <div className={styles['imageOverlay']}></div>
             </div>
 
-            {/* Right Side: Form */}
             <div className={styles['formSection']}>
                 <h1 className={styles['title']}>Welcome Back</h1>
                 <p className={styles['subtitle']}>Please enter your details to sign in.</p>
 
                 <form className={styles['form']} onSubmit={onSubmit}>
                     
-                    {/* Email Input */}
                     <div className={styles['inputGroup']}>
                         <label htmlFor="email" className={styles['label']}>Email</label>
                         <input 
@@ -50,7 +47,6 @@ export default function Login() {
                         />
                     </div>
 
-                    {/* Password Input */}
                     <div className={styles['inputGroup']}>
                         <label htmlFor="password" className={styles['label']}>Password</label>
                         <input 
@@ -65,7 +61,6 @@ export default function Login() {
                         />
                     </div>
 
-                    {/* Actions (Forgot Password) */}
                     <div className={styles['actions']}>
                         <label style={{display:'flex', gap:'8px', alignItems:'center', cursor:'pointer'}}>
                            <input type="checkbox" /> Remember me

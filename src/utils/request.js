@@ -39,7 +39,6 @@ const request = async (method, url, data) => {
     return result;
 };
 
-// These are the functions you will actually use in your components
 export const get = request.bind(null, 'GET');
 export const post = request.bind(null, 'POST');
 export const put = request.bind(null, 'PUT');

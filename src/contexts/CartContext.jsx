@@ -3,7 +3,6 @@ import { createContext, useContext, useState, useEffect } from "react";
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-    // Initialize from localStorage to persist cart on refresh
     const [cart, setCart] = useState(() => {
         const saved = localStorage.getItem("cart");
         return saved ? JSON.parse(saved) : [];

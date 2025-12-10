@@ -6,7 +6,7 @@ export default function Logout() {
 
     useEffect(() => {
         logoutHandler();
-    }, []); // Empty dependency array means "run once when component mounts"
+    }, []); 
 
-    return null; // Don't render anything visible
+    return null; 
 }
