@@ -9,12 +9,14 @@ export const AuthProvider = ({ children }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const token = localStorage.getItem('accessToken');
+        const accessToken = localStorage.getItem('accessToken');
         const email = localStorage.getItem('email');
         const _id = localStorage.getItem('_id');
+        const username = localStorage.getItem('username');
+        const role = localStorage.getItem('role');
         
-        if (token) {
-            setAuth({ accessToken: token, email, _id });
+        if (accessToken) {
+            setAuth({ accessToken, email, _id, username, role });
         }
     }, []);
 
@@ -25,6 +27,8 @@ export const AuthProvider = ({ children }) => {
             setAuth(result);
             localStorage.setItem('accessToken', result.accessToken);
             localStorage.setItem('email', result.email);
+            localStorage.setItem('username', result.username);
+            localStorage.setItem('role', result.role);
             localStorage.setItem('_id', result._id);
 
             navigate('/'); 
@@ -44,6 +48,8 @@ export const AuthProvider = ({ children }) => {
             setAuth(result);
             localStorage.setItem('accessToken', result.accessToken);
             localStorage.setItem('email', result.email);
+            localStorage.setItem('username', result.username);
+            localStorage.setItem('role', result.role);
             localStorage.setItem('_id', result._id);
 
             navigate('/');
@@ -56,7 +62,7 @@ export const AuthProvider = ({ children }) => {
         try {
             await request.get('http://localhost:3030/users/logout');
         } catch (error) {
-            console.log("Logout failed (server might be down), clearing local state anyway");
+            console.log(error);
         }
         
         setAuth({});
@@ -64,10 +70,22 @@ export const AuthProvider = ({ children }) => {
         navigate('/');
     };
 
+    const userUpdate = (data) => {
+        setAuth(state => {
+            const newState = { ...state, ...data };
+            
+            if (data.email) localStorage.setItem('email', data.email);
+            if (data.username) localStorage.setItem('username', data.username);
+            
+            return newState;
+        });
+    };
+
     const values = {
         loginSubmitHandler,
         registerSubmitHandler,
         logoutHandler,
+        userUpdate,
         user: auth,
         userId: auth._id,
         email: auth.email,
@@ -80,7 +98,7 @@ export const AuthProvider = ({ children }) => {
         </AuthContext.Provider>
     );
 };
-
+    
 export const useAuth = () => {
     return useContext(AuthContext);
 };

@@ -60,10 +60,36 @@
 }
 
 .footer {
-  display: flex; justify-content: space-between; align-items: center;
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center;
+  margin-top: auto;
 }
 
-.price { font-size: 15px; font-weight: 700; }
+.price { font-size: 16px; font-weight: 700; }
+
+/* NEW BUTTON STYLE */
+.addBtn {
+  background-color: var(--primary-black);
+  color: white;
+  border: none;
+  padding: 8px 16px;       /* Rectangle padding */
+  border-radius: 20px;     /* Pill shape */
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  transition: transform 0.2s linear;
+}
+
+.addBtn:hover {
+  background-color: #0a71ba;
+  transform: translateY(-3px);
+}
 
 .colors { display: flex; gap: 6px; }
 
