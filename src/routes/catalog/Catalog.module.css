@@ -1,0 +1,148 @@
+.container {
+  background-color: var(--card-bg);
+  width: 92%; /* Matches your HTML */
+  max-width: 1800px;
+  border-radius: 24px;
+  min-height: 85vh;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.04);
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+  position: relative;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.searchGroup {
+  display: flex; gap: 15px; flex-grow: 1; max-width: 500px;
+}
+
+.searchBox { position: relative; flex-grow: 1; }
+
+.searchInput {
+  width: 100%; padding: 12px 45px 12px 20px;
+  border-radius: 30px; border: 1px solid var(--border-color);
+  outline: none; font-size: 14px; color: var(--text-main); background: #FAFAFA;
+  transition: border-color 0.2s;
+}
+
+.searchInput:focus {
+  border-color: var(--primary-black); background: #fff;
+}
+
+.searchIcon {
+  position: absolute; right: 15px; top: 50%;
+  transform: translateY(-50%); width: 18px; height: 18px;
+  opacity: 0.5; pointer-events: none;
+}
+
+.sortOptions { display: flex; align-items: center; gap: 12px; }
+
+.sortBtn {
+  background: none; border: 1px solid transparent; font-size: 14px;
+  color: var(--text-muted); cursor: pointer; padding: 8px 16px;
+  border-radius: 30px; transition: all 0.2s;
+}
+
+.sortBtn:hover { color: var(--text-main); background-color: #F9F9F9; }
+
+.sortBtnActive {
+  background-color: #F0F0F0; color: var(--text-main); border-color: #E5E5E5;
+  font-weight: 600; padding: 8px 16px; border-radius: 30px;
+  border: 1px solid #E5E5E5; cursor: pointer; font-size: 14px;
+}
+
+.contentWrapper {
+  display: flex;
+  gap: 50px; /* Matches your HTML gap */
+}
+
+.sidebar { width: 280px; flex-shrink: 0; }
+.section { margin-bottom: 35px; }
+.sectionTitle {
+  font-size: 13px; font-weight: 700; margin-bottom: 15px;
+  color: var(--text-main); text-transform: uppercase; letter-spacing: 1px;
+}
+
+.checkboxWrapper {
+  display: flex; align-items: center;
+}
+
+.filterRow {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 12px; cursor: pointer;
+}
+
+.filterRow input { display: none; }
+
+.checkboxCustom {
+  width: 18px; height: 18px; border: 1.5px solid #ccc;
+  border-radius: 4px; margin-right: 10px; display: flex;
+  align-items: center; justify-content: center; transition: all 0.2s;
+}
+
+.filterRow input:checked + .checkboxCustom {
+  background-color: var(--primary-black); border-color: var(--primary-black);
+}
+
+.checkboxCustom:after {
+  content: ''; width: 4px; height: 8px; border: solid white;
+  border-width: 0 2px 2px 0; transform: rotate(45deg); display: none; margin-bottom: 2px;
+}
+.filterRow input:checked + .checkboxCustom:after { display: block; }
+
+.filterLabel { font-size: 15px; color: #444; flex-grow: 1; }
+.filterCount { font-size: 12px; color: #999; }
+
+.slider {
+  width: 100%; -webkit-appearance: none; height: 4px;
+  background: #E0E0E0; border-radius: 2px; outline: none;
+}
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%;
+  background: var(--primary-black); cursor: pointer; margin-top: -6px;
+}
+.slider::-webkit-slider-runnable-track {
+  width: 100%; height: 4px;
+}
+
+.grid {
+  flex-grow: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+  align-content: start;
+}
+
+.mobileFilterBtn {
+  display: none; align-items: center; gap: 8px;
+  background: var(--primary-black); color: white; padding: 10px 20px;
+  border-radius: 30px; font-size: 14px; font-weight: 600; cursor: pointer; border: none;
+}
+
+@media (max-width: 900px) {
+  .contentWrapper { display: flex; flex-direction: column; gap: 0; }
+  .sidebar {
+    position: fixed; top: 0; left: 0; height: 100vh; width: 85%; max-width: 320px;
+    background: white; z-index: 100; padding: 25px;
+    transform: translateX(-100%); transition: transform 0.3s ease;
+    box-shadow: 4px 0 20px rgba(0,0,0,0.1);
+  }
+  .sidebar.active { transform: translateX(0); }
+  .mobileFilterBtn { display: flex; margin-bottom: 20px; }
+  
+  .sortOptions { display: none; }
+  .searchGroup { max-width: none; }
+}
+
+@media (max-width: 768px) {
+  .container { width: 100%; border-radius: 0; box-shadow: none; padding: 20px; }
+}
