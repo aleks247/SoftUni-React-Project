@@ -9,11 +9,13 @@ import Edit from "./routes/Edit";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import { useEffect, useState } from "react";
+import { AuthProvider } from "./contexts/AuthContext";
+import Logout from "./auth/Logout";
 
 function App() {
     const [products, setProducts] = useState([]);
-
-    useEffect(() =>  {
+    
+    useEffect(() => {
         fetch("http://localhost:3030/jsonstore/products")
             .then((response) => response.json())
             .then((data) => {
@@ -21,28 +23,46 @@ function App() {
             })
             .catch((err) => alert(err.message));
     }, []);
-    
+
     return (
         <>
-            <Navbar></Navbar>
+            <AuthProvider>
+                <Navbar></Navbar>
 
-            <Routes>
-                <Route path="/" element={<Home products={products}/>} />
+                <Routes>
+                    <Route path="/" element={<Home products={products} />} />
 
-                <Route path="/catalog" element={<Catalog products={products} gender={"unisex"}/>} />
-                <Route path="/catalog/male" element={<Catalog products={products} gender={"male"}/>} />
-                <Route path="/catalog/female" element={<Catalog products={products} gender={"female"}/>} />
-                
-                <Route path="/products/:id" element={<Details />} />
+                    <Route
+                        path="/catalog"
+                        element={
+                            <Catalog products={products} gender={"unisex"} />
+                        }
+                    />
+                    <Route
+                        path="/catalog/male"
+                        element={
+                            <Catalog products={products} gender={"male"} />
+                        }
+                    />
+                    <Route
+                        path="/catalog/female"
+                        element={
+                            <Catalog products={products} gender={"female"} />
+                        }
+                    />
 
-                <Route path="create" element={<Create />} />
-                <Route path="/edit/:id" element={<Edit />} />
+                    <Route path="/products/:id" element={<Details />} />
 
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-            </Routes>
+                    <Route path="create" element={<Create />} />
+                    <Route path="/edit/:id" element={<Edit />} />
 
-            <Footer />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/logout" element={<Logout />} />
+                </Routes>
+
+                <Footer />
+            </AuthProvider>
         </>
     );
 }
