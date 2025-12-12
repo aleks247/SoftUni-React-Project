@@ -5,20 +5,21 @@ import * as request from '../utils/request';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [auth, setAuth] = useState(null);
+    // const [auth, setAuth] = useState(null);
     const navigate = useNavigate();
 
-    useEffect(() => {
+    const [auth, setAuth] = useState(() => {
         const accessToken = localStorage.getItem('accessToken');
-        const email = localStorage.getItem('email');
-        const _id = localStorage.getItem('_id');
-        const username = localStorage.getItem('username');
-        const role = localStorage.getItem('role');
-        
-        if (accessToken) {
-            setAuth({ accessToken, email, _id, username, role });
-        }
-    }, []);
+        if (!accessToken) return null;
+        return {
+            accessToken,
+            email: localStorage.getItem('email'),
+            _id: localStorage.getItem('_id'),
+            username: localStorage.getItem('username'),
+            role: localStorage.getItem('role')
+        };
+    });
+
 
     const loginSubmitHandler = async (values) => {
         try {

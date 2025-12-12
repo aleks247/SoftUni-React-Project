@@ -99,10 +99,10 @@ export default function Navbar() {
                     <Link to="/catalog" className={getLinkClass("/catalog")}>
                         Catalog
                     </Link>
-                    <Link to="/catalog/male" className={styles["link"]}>
+                    <Link to="/catalog/male" className={getLinkClass("/catalog/male")}>
                         Men
                     </Link>
-                    <Link to="/catalog/female" className={styles["link"]}>
+                    <Link to="/catalog/female" className={getLinkClass("/catalog/female")}>
                         Women
                     </Link>
 
@@ -110,7 +110,10 @@ export default function Navbar() {
                         <Link to="/login" className={getLinkClass("/login")}>
                             Login
                         </Link>
-                    ) : (
+                    ) : (<>
+                        <Link to="/admin" className={getLinkClass("/admin")}>
+                            Admin
+                        </Link>
                         <div className={styles["dropdown"]}>
                             <Link to="/profile" className={styles["profileTrigger"]}>
                                 <svg
@@ -143,7 +146,7 @@ export default function Navbar() {
                                 </button>
                             </div>
                         </div>
-                    )}
+                    </>)}
                 </div>
 
                 {isAuthenticated && (
