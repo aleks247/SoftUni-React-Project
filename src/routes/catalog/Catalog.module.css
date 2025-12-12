@@ -128,6 +128,14 @@
   border-radius: 30px; font-size: 14px; font-weight: 600; cursor: pointer; border: none;
 }
 
+.no-products{
+  margin: auto;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+
 @media (max-width: 900px) {
   .contentWrapper { display: flex; flex-direction: column; gap: 0; }
   .sidebar {

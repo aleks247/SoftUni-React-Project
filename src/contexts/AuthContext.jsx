@@ -5,7 +5,7 @@ import * as request from '../utils/request';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [auth, setAuth] = useState({});
+    const [auth, setAuth] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -65,7 +65,7 @@ export const AuthProvider = ({ children }) => {
             console.log(error);
         }
         
-        setAuth({});
+        setAuth(null);
         localStorage.clear();
         navigate('/');
     };
@@ -87,9 +87,9 @@ export const AuthProvider = ({ children }) => {
         logoutHandler,
         userUpdate,
         user: auth,
-        userId: auth._id,
-        email: auth.email,
-        isAuthenticated: !!auth.accessToken,
+        userId: auth?._id,
+        email: auth?.email,
+        isAuthenticated: !!auth?.accessToken,
     };
 
     return (

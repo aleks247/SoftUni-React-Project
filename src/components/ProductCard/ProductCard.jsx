@@ -24,9 +24,9 @@ export default function ProductCard({ product }) {
                     <div className={styles["tag"]}>{product.tag}</div>
                 )}
 
-                {product.image && !imageError ? (
+                {product.images.length>0 && !imageError ? (
                     <img
-                        src={product.image}
+                        src={product.images[0]}
                         alt={product.name}
                         className={styles["productImg"]}
                         onError={() => setImageError(true)}

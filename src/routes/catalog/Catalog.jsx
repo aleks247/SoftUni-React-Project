@@ -2,19 +2,30 @@ import { useEffect, useState } from "react";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import styles from "./Catalog.module.css";
 
-export default function Catalog({products, gender}) {
+export default function Catalog({ products, gender }) {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
-    const [filteredProducts, setFilteredProducts] = useState([])
-    
+    const [filteredProducts, setFilteredProducts] = useState([]);
+
     useEffect(() => {
         if (gender === "male") {
-            setFilteredProducts(products.filter(product => product.gender == "male" || product.gender == "unisex"));
+            setFilteredProducts(
+                products.filter(
+                    (product) =>
+                        product.gender == "male" || product.gender == "unisex"
+                )
+            );
         } else if (gender === "female") {
-            setFilteredProducts(products.filter(product => product.gender == "female" || product.gender == "unisex"));
+            setFilteredProducts(
+                products.filter(
+                    (product) =>
+                        product.gender == "female" || product.gender == "unisex"
+                )
+            );
         } else {
             setFilteredProducts(products);
         }
     }, [gender, products]);
+
     
     return (
         <div className={styles["container"]}>
@@ -196,19 +207,22 @@ export default function Catalog({products, gender}) {
                         </label>
                     </div>
                 </aside>
-
-                <div className={styles["grid"]}>
-                    {filteredProducts.map((product) => (
-                        <ProductCard key={product.id} product={product} />
-                    ))}
-                    {/* Creating more cards */}
-                    {filteredProducts.map((product) => (
+                {filteredProducts.length == 0 ? (
+                    <h2 className={styles['no-products']} > No products found</h2>
+                ) : (
+                    <div className={styles["grid"]}>
+                        {filteredProducts.map((product) => (
+                            <ProductCard key={product.id} product={product} />
+                        ))}
+                        {/* Creating more cards */}
+                        {/* {filteredProducts.map((product) => (
                         <ProductCard
-                            key={`copy-${product.id}`}
-                            product={product}
+                        key={`copy-${product.id}`}
+                        product={product}
                         />
-                    ))}
-                </div>
+                        ))} */}
+                    </div>
+                )}
             </div>
         </div>
     );
