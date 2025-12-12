@@ -2,8 +2,6 @@ import { Routes, Route } from "react-router";
 import Home from "./routes/home/Home";
 import Catalog from "./routes/catalog/Catalog";
 import ProductDetails from "./routes/productDetails/ProductDetails";
-import AdminCreateProduct from "./routes/admin/AdminCreateProduct";
-import AdminEditProduct from "./routes/admin/AdminEditProduct";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
 import Logout from "./auth/Logout";
@@ -17,6 +15,7 @@ import { CartProvider } from "./contexts/CartContext";
 import PublicRoute from "./routes/PublicRoute";
 import PrivateRoute from "./routes/PrivateRoute";
 import AdminDashboard from "./routes/admin/AdminDashboard";
+import AdminSaveProduct from "./routes/admin/AdminSaveProduct";
 
 export default function App() {
     const [products, setProducts] = useState([]);
@@ -50,14 +49,15 @@ export default function App() {
 
                     {/* Protected pages */}
                     <Route element={<PrivateRoute />}>
-                        <Route path="/create" element={<AdminCreateProduct />} />
-                        <Route path="/edit/:id" element={<AdminEditProduct />} />
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/logout" element={<Logout />} />
                     </Route>
 
-                    <Route element={<PrivateRoute isAdmin={true}/>}>
-                        <Route path="/admin" element={<AdminDashboard />} />
+                    {/* Admin pages */}
+                    <Route path="/admin" element={<PrivateRoute isAdmin={true} />}>
+                        <Route index element={<AdminDashboard />} />
+                        <Route path="create" element={<AdminSaveProduct />} />
+                        <Route path="edit/:id" element={<AdminSaveProduct />} /> 
                     </Route>
 
                     {/* Not found */}
