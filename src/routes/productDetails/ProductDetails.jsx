@@ -1,54 +1,63 @@
-import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router';
-import { useCart } from '../../contexts/CartContext';
-import styles from './ProductDetails.module.css';
+import { useState, useEffect } from "react";
+import { useParams, Link, useNavigate } from "react-router";
+import { useCart } from "../../contexts/CartContext";
+import styles from "./ProductDetails.module.css";
+import { useAuth } from "../../contexts/AuthContext";
 
-export default function ProductDetails({products}) {
+export default function ProductDetails() {
     const { id } = useParams();
     const { addToCart } = useCart();
-    
+    const { isAuthenticated } = useAuth();
+    const navigate = useNavigate();
     const [product, setProduct] = useState(null);
     const [mainImage, setMainImage] = useState("");
 
-    // #TODO makewhen you refresh to show the product
-
     useEffect(() => {
-        const found = products.find(p => p.id === parseInt(id));
-        
-        if (found) {
-            setProduct(found);
-            setMainImage(found.images?.[0] || found.image || "");
-        }
+        fetch(`http://localhost:3030/jsonstore/products/${id}`)
+            .then((res) => res.json())
+            .then((data) => {
+                setProduct(data);
+                setMainImage(data.images?.[0] || data.image || "");
+            })
+            .catch((err) => alert(err.message));
     }, [id]);
 
     if (!product) {
         return (
-            <div style={{textAlign:'center', padding:'100px'}}>
+            <div style={{ textAlign: "center", padding: "100px" }}>
                 <h2>Product not found</h2>
-                <Link to="/catalog" style={{textDecoration:'underline'}}>Back to Catalog</Link>
+                <Link to="/catalog" style={{ textDecoration: "underline" }}>
+                    Back to Catalog
+                </Link>
             </div>
         );
     }
 
-    const images = product.images && product.images.length > 0 
-        ? product.images 
-        : [product.image]; 
+    const images =
+        product.images && product.images.length > 0
+            ? product.images
+            : [product.image];
 
     return (
         <div className={styles.container}>
-            
             <div className={styles.gallery}>
                 <div className={styles.mainImageWrapper}>
-                    <img src={mainImage} alt={product.name} className={styles.mainImage} />
+                    <img
+                        src={mainImage}
+                        alt={product.name}
+                        className={styles.mainImage}
+                    />
                 </div>
-                
+
                 <div className={styles.thumbnails}>
                     {images.map((img, index) => (
-                        <img 
-                            key={index} 
-                            src={img} 
-                            alt={`View ${index}`} 
-                            className={`${styles.thumb} ${mainImage === img ? styles.activeThumb : ''}`}
+                        <img
+                            key={index}
+                            src={img}
+                            alt={`View ${index}`}
+                            className={`${styles.thumb} ${
+                                mainImage === img ? styles.activeThumb : ""
+                            }`}
                             onClick={() => setMainImage(img)}
                         />
                     ))}
@@ -57,7 +66,13 @@ export default function ProductDetails({products}) {
 
             <div className={styles.info}>
                 <div className={styles.breadcrumb}>
-                    <Link to="/catalog" style={{textDecoration:'none', color:'inherit'}}>Catalog</Link> / {product.category || 'Clothing'}
+                    <Link
+                        to="/catalog"
+                        style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                        Catalog
+                    </Link>{" "}
+                    / {product.category || "Clothing"}
                 </div>
 
                 <h1 className={styles.title}>{product.name}</h1>
@@ -68,9 +83,14 @@ export default function ProductDetails({products}) {
                 <div className={styles.selectorGroup}>
                     <span className={styles.label}>Color</span>
                     <div className={styles.colorOptions}>
-                        {product.colors && product.colors.map((c, i) => (
-                            <div key={i} className={styles.colorCircle} style={{backgroundColor: c}}></div>
-                        ))}
+                        {product.colors &&
+                            product.colors.map((c, i) => (
+                                <div
+                                    key={i}
+                                    className={styles.colorCircle}
+                                    style={{ backgroundColor: c }}
+                                ></div>
+                            ))}
                     </div>
                 </div>
 
@@ -84,15 +104,13 @@ export default function ProductDetails({products}) {
                     </div>
                 </div>
 
-                <button 
+                <button
                     className={styles.addToCartBtn}
                     onClick={() => {
-                        addToCart(product)
+                        isAuthenticated? addToCart(product) : navigate("/login")
                     }}
-                >
-                    Add to Cart
-                </button>
+                >Add to Cart</button>
             </div>
         </div>
     );
-};
+}

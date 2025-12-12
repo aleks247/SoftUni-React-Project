@@ -1,11 +1,14 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import styles from "./ProductCard.module.css";
 import { useCart } from "../../contexts/CartContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function ProductCard({ product }) {
     const [imageError, setImageError] = useState(false);
     const { addToCart } = useCart();
+    const { isAuthenticated } = useAuth();
+    const navigate = useNavigate();
 
     const handleAddToCart = (e) => {
         e.preventDefault();
@@ -24,7 +27,7 @@ export default function ProductCard({ product }) {
                     <div className={styles["tag"]}>{product.tag}</div>
                 )}
 
-                {product.images.length>0 && !imageError ? (
+                {product.images.length > 0 && !imageError ? (
                     <img
                         src={product.images[0]}
                         alt={product.name}
@@ -54,11 +57,18 @@ export default function ProductCard({ product }) {
                     </div>
 
                     <button
-                        onClick={handleAddToCart}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+
+                            if (isAuthenticated) {
+                                addToCart(product);
+                            } else {
+                                navigate("/login");
+                            }
+                        }}
                         className={styles["addBtn"]}
-                    >
-                        Add to cart
-                    </button>
+                    >Add to cart</button>
                 </div>
             </div>
         </Link>
