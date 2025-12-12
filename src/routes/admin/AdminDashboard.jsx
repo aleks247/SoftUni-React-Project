@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { get, remove } from "../../utils/request";
 import styles from "./Admin.module.css";
-
+// #TODO Make CRUD for orders and users
 export default function AdminDashboard() {
     const [products, setProducts] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState(null);

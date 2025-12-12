@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router";
 import styles from "./Navbar.module.css";
 import { useAuth } from "../../contexts/AuthContext";
 import { useCart } from "../../contexts/CartContext";
-
+// #TODO Make orders page for user
 export default function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isCartOpen, setIsCartOpen] = useState(false);
