@@ -213,7 +213,7 @@ export default function AdminSaveProduct() {
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
                         <div className={styles['inputGroup']}>
                             <label className={styles['label']}>Price</label>
-                            <input className={styles['input']} type="number" step="0.01" value={price} onChange={(e) => setPrice(e.target.value)} required />
+                            <input className={styles['input']} type="number" step="0.01" value={price} onChange={(e) => setPrice(e.target.value)} min={0} required />
                         </div>
                         <div className={styles['inputGroup']}>
                             <label className={styles['label']}>Category</label>
