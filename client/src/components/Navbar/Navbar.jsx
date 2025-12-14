@@ -10,7 +10,7 @@ export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
 
     const location = useLocation();
-    const { isAuthenticated, logoutHandler } = useAuth();
+    const { isAuthenticated, logoutHandler, auth } = useAuth();
     const {
         cart,
         removeFromCart,
@@ -111,9 +111,12 @@ export default function Navbar() {
                             Login
                         </Link>
                     ) : (<>
+                        {localStorage.getItem('role')==="admin" && 
                         <Link to="/admin" className={getLinkClass("/admin")}>
                             Admin
                         </Link>
+                        }
+
                         <div className={styles["dropdown"]}>
                             <Link to="/profile" className={styles["profileTrigger"]}>
                                 <svg
