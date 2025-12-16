@@ -1,7 +1,7 @@
 .container {
   background-color: #FFFFFF;
   width: 92%;
-  max-width: 1400px;
+  max-width: 1600px;
   border-radius: 24px;
   min-height: 80vh;
   box-shadow: 0 10px 40px rgba(0,0,0,0.04);
@@ -340,3 +340,41 @@
     overflow-x: scroll;
   }
 }
+
+.categoryBadge {
+    background: #f0f0f0;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.dashboards {
+  display: flex;
+  gap: 0 2rem;
+  justify-content: center;
+  align-items: center;
+  /* position: relative; */
+  padding: 1rem 2rem;
+  width: 25vw;
+  background-color: #FFFFFF;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.dashboards button {
+  background: none;
+  border: 0;
+  padding: 7px 10px;
+  border-radius: 15px;
+}
+
+.activeDashboard {
+  /* border-bottom: 3px solid #24d984 !important; */
+  font-weight: 700;
+  background-color: var(--primary-black) !important;
+  color: white !important;
+}
+
+
