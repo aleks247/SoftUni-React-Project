@@ -16,6 +16,7 @@ import PublicRoute from "./routes/PublicRoute";
 import PrivateRoute from "./routes/PrivateRoute";
 import AdminDashboard from "./routes/admin/AdminDashboard";
 import AdminSaveProduct from "./routes/admin/AdminSaveProduct";
+import Orders from "./routes/orders/Orders";
 
 export default function App() {
     const [products, setProducts] = useState([]);
@@ -50,6 +51,7 @@ export default function App() {
                     {/* Protected pages */}
                     <Route element={<PrivateRoute />}>
                         <Route path="/profile" element={<Profile />} />
+                        <Route path="/profile/orders" element={<Orders />} />
                         <Route path="/logout" element={<Logout />} />
                     </Route>
 

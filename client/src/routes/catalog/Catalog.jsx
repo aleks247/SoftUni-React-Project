@@ -15,7 +15,7 @@ export default function Catalog({ products, gender }) {
     const priceGap = 10; 
 
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 12; 
+    const itemsPerPage = 9; 
 
     const categories = [...new Set(products.map(p => p.category))].filter(Boolean);
 

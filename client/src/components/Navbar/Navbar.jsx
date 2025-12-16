@@ -138,7 +138,7 @@ export default function Navbar() {
                                 <Link to="/profile" className={styles["dropdownItem"]}>
                                     Settings
                                 </Link>
-                                <Link to="/profile" className={styles["dropdownItem"]}>
+                                <Link to="/profile/orders" className={styles["dropdownItem"]}>
                                     Orders
                                 </Link>
                                 <button
