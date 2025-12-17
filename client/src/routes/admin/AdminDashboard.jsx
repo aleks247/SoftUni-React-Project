@@ -4,6 +4,7 @@ import AdminUsersTable from "./tables/AdminUsersTable";
 import AdminOrdersTable from "./tables/AdminOrdersTable";
 import { get, remove } from "../../utils/request";
 import styles from "./Admin.module.css";
+import { Link } from "react-router";
 
 export default function AdminDashboard() {
     const [active, setActive] = useState("users");
@@ -88,10 +89,10 @@ export default function AdminDashboard() {
                     </h1>
 
                     {active === "products" && (
-                        <a href="/admin/product/create" className={styles.primaryBtn}>+ Create Product</a>
+                        <Link to="/admin/product/create" className={styles.primaryBtn}>+ Create Product</Link>
                     )}
                     {active === "users" && (
-                        <a href="/admin/users/create" className={styles.primaryBtn}>+ Create User</a>
+                        <Link to="/admin/users/create" className={styles.primaryBtn}>+ Create User</Link>
                     )}
                 </div>
 
