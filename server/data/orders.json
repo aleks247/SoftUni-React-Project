@@ -8,8 +8,12 @@
         ],
         "total": 195,
         "date": "2025-12-12T19:09:03.853Z",
+        "status": "Processing",
+        "user_id": "60f0cf0b-34b0-4abd-9769-8c42f830dffc",
         "_id": "feb32379-9024-4a6f-a676-2ac65a4ad365"
     },
+
+
      "45982180-09e9-483a-b2cc-989dfa625ec9": {
     "products": [
       {
@@ -31,6 +35,8 @@
     ],
     "total": 315,
     "date": "2025-12-12T19:09:33.937Z",
+    "status": "Processing",
+    "user_id": "60f0cf0b-34b0-4abd-9769-8c42f830dffc",
     "_id": "45982180-09e9-483a-b2cc-989dfa625ec9"
   }
 }

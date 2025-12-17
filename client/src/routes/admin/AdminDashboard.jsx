@@ -1,153 +1,97 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router";
+import { useState, useEffect } from "react";
+import AdminProductsTable from "./tables/AdminProductsTable";
+import AdminUsersTable from "./tables/AdminUsersTable";
+import AdminOrdersTable from "./tables/AdminOrdersTable";
 import { get, remove } from "../../utils/request";
-import Table from "../../components/Table/Table";
 import styles from "./Admin.module.css";
 
 export default function AdminDashboard() {
-    const [dashboardsActive, setDashboardsActive] = useState("users");
-    const [loading, setLoading] = useState(true);
+    const [active, setActive] = useState("users");
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     const [products, setProducts] = useState([]);
     const [users, setUsers] = useState([]);
     const [orders, setOrders] = useState([]);
 
-    const fetchProducts = async () => {
-        setLoading(true);
-        setError(null);
-        try {
-            const data = await get("http://localhost:3030/jsonstore/products");
-            setProducts(Object.entries(data || {}).map(([id, p]) => ({ id, ...p })));
-        } catch (err) {
-            setError(err.message || "Failed to load products");
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const fetchUsers = async () => {
-        setLoading(true);
-        setError(null);
-        try {
-            const data = await get("http://localhost:3030/jsonstore/users");
-            setUsers(Object.entries(data || {}).map(([id, u]) => ({ id, ...u })));
-        } catch (err) {
-            setError(err.message || "Failed to load users");
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const fetchOrders = async () => {
-        setLoading(true);
-        setError(null);
-        try {
-            const data = await get("http://localhost:3030/jsonstore/orders");
-            setOrders(Object.entries(data || {}).map(([id, o]) => ({ id, ...o })));
-        } catch (err) {
-            setError(err.message || "Failed to load orders");
-        } finally {
-            setLoading(false);
-        }
-    };
-
     useEffect(() => {
-        if (dashboardsActive === "products") fetchProducts();
-        if (dashboardsActive === "users") fetchUsers();
-        if (dashboardsActive === "orders") fetchOrders();
-    }, [dashboardsActive]);
+        setLoading(true);
+        setError(null);
 
-    const handleDelete = async (id) => {
-        if (!window.confirm("Are you sure you want to delete this product?")) return;
+        const fetchData = async () => {
+            try {
+                if (active === "products") {
+                    const data = await get("http://localhost:3030/jsonstore/products");
+                    setProducts(Object.entries(data || {}).map(([id, p]) => ({ id, ...p })));
+                } else if (active === "users") {
+                    const data = await get("http://localhost:3030/jsonstore/users");
+                    setUsers(Object.entries(data || {}).map(([id, u]) => ({ id, ...u })));
+                } else if (active === "orders") {
+                    const [ordersData, usersData, productsData] = await Promise.all([
+                        get("http://localhost:3030/jsonstore/orders"),
+                        get("http://localhost:3030/jsonstore/users"),
+                        get("http://localhost:3030/jsonstore/products")
+                    ]);
+
+                    setOrders(Object.entries(ordersData || {}).map(([id, o]) => ({ id, ...o })));
+                    setUsers(Object.entries(usersData || {}).map(([id, u]) => ({ id, ...u })));
+                    setProducts(Object.entries(productsData || {}).map(([id, p]) => ({ id, ...p })));
+                }
+            } catch (err) {
+                setError(err.message || "Failed to load data");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, [active]);
+
+    const handleDelete = async (collection, id, setter) => {
+        const confirmMsg = `Are you sure you want to delete this ${collection.slice(0, -1)}?`;
+        if (!window.confirm(confirmMsg)) return;
         try {
-            await remove(`http://localhost:3030/jsonstore/products/${id}`);
-            setProducts((p) => p.filter((x) => x.id !== id));
-        } catch (err) {
-            alert(err.message || "Failed to delete product");
+            await remove(`http://localhost:3030/jsonstore/${collection}/${id}`);
+            setter(prev => prev.filter(x => x.id !== id));
+        } catch {
+            alert("Failed to delete item.");
         }
     };
-
-    const productColumns = [
-        {
-            label: "Image",
-            render: (prod) => (
-                <img
-                    src={prod.images?.[0] || prod.image || "https://via.placeholder.com/50"}
-                    alt={prod.name}
-                    className={styles.tableThumb}
-                />
-            ),
-        },
-        { label: "Name", render: (prod) => <strong>{prod.name}</strong> },
-        { label: "Price", render: (prod) => `$${Number(prod.price).toFixed(2)}` },
-        { label: "Category", render: (prod) => <span className={styles.categoryBadge}>{prod.category || "N/A"}</span> },
-    ];
-
-    const userColumns = [
-        { label: "Email", render: (u) => u.email },
-        { label: "Role", render: (u) => u.role },
-        { label: "Created", render: (u) => new Date(u.createdAt).toLocaleDateString() },
-    ];
-
-    const orderColumns = [
-        { label: "Order ID", render: (o) => o.id },
-        { label: "User", render: (o) => o.userEmail },
-        { label: "Total", render: (o) => `$${o.total.toFixed(2)}` },
-        { label: "Status", render: (o) => o.status },
-    ];
-
-    const actions = (prod) => (
-        <>
-            <Link to={`/catalog/${prod.id}`} style={{ textDecoration: "none" }}>
-                <button className={`${styles.actionBtn} ${styles.viewBtn}`}>View</button>
-            </Link>
-
-            <Link to={`/admin/edit/${prod.id}`} style={{ textDecoration: "none" }}>
-                <button className={`${styles.actionBtn} ${styles.editBtn}`}>Edit</button>
-            </Link>
-
-            <button className={`${styles.actionBtn} ${styles.deleteBtn}`} onClick={() => handleDelete(prod.id)}>Delete</button>
-        </>
-    );
-
-    let tableData = [];
-    let tableColumns = [];
-    let emptyMessage = "";
-
-    switch (dashboardsActive) {
-        case "users":
-            tableData = users;
-            tableColumns = userColumns;
-            emptyMessage = "No users found.";
-            break;
-        case "products":
-            tableData = products;
-            tableColumns = productColumns;
-            emptyMessage = "No products found.";
-            break;
-        case "orders":
-            tableData = orders;
-            tableColumns = orderColumns;
-            emptyMessage = "No orders found.";
-            break;
-        default:
-            break;
-    }
 
     return (
         <>
             <div className={styles.dashboards}>
-                <button className={dashboardsActive === "users" ? styles.activeDashboard : ""} onClick={() => setDashboardsActive("users")}>Users</button>
-                <button className={dashboardsActive === "products" ? styles.activeDashboard : ""} onClick={() => setDashboardsActive("products")}>Products</button>
-                <button className={dashboardsActive === "orders" ? styles.activeDashboard : ""} onClick={() => setDashboardsActive("orders")}>Orders</button>
+                <button
+                    className={active === "users" ? styles.activeDashboard : ""}
+                    onClick={() => setActive("users")}
+                >
+                    Users
+                </button>
+                <button
+                    className={active === "products" ? styles.activeDashboard : ""}
+                    onClick={() => setActive("products")}
+                >
+                    Products
+                </button>
+                <button
+                    className={active === "orders" ? styles.activeDashboard : ""}
+                    onClick={() => setActive("orders")}
+                >
+                    Orders
+                </button>
             </div>
 
             <div className={styles.container}>
                 <div className={styles.header}>
-                    <h1 className={styles.title}>{dashboardsActive.charAt(0).toUpperCase() + dashboardsActive.slice(1)} Dashboard</h1>
-                    {dashboardsActive === "products" && (
-                        <Link to="/admin/create" className={styles.primaryBtn}>Create Product</Link>
+                    <h1 className={styles.title}>
+                        {active.charAt(0).toUpperCase() + active.slice(1)}
+                    </h1>
+
+                    {active === "products" && (
+                        <a href="/admin/product/create" className={styles.primaryBtn}>+ Create Product</a>
+                    )}
+                    {active === "users" && (
+                        <a href="/admin/users/create" className={styles.primaryBtn}>+ Create User</a>
                     )}
                 </div>
 
@@ -155,12 +99,30 @@ export default function AdminDashboard() {
                 {error && <p style={{ color: "red" }}>{error}</p>}
 
                 {!loading && !error && (
-                    <Table
-                        data={tableData}
-                        columns={tableColumns}
-                        actions={dashboardsActive === "products" ? actions : undefined}
-                        emptyMessage={emptyMessage}
-                    />
+                    <>
+                        {active === "users" && (
+                            <AdminUsersTable
+                                users={users}
+                                onDelete={(id) => handleDelete("users", id, setUsers)}
+                            />
+                        )}
+
+                        {active === "products" && (
+                            <AdminProductsTable
+                                products={products}
+                                onDelete={(id) => handleDelete("products", id, setProducts)}
+                            />
+                        )}
+
+                        {active === "orders" && (
+                            <AdminOrdersTable
+                                orders={orders}
+                                users={users}
+                                products={products}
+                                onDelete={(id) => handleDelete("orders", id, setOrders)}
+                            />
+                        )}
+                    </>
                 )}
             </div>
         </>

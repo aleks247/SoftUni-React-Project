@@ -10,7 +10,7 @@ export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
 
     const location = useLocation();
-    const { isAuthenticated, logoutHandler, auth } = useAuth();
+    const { isAuthenticated, logoutHandler, userId } = useAuth();
     const {
         cart,
         removeFromCart,
@@ -43,6 +43,7 @@ export default function Navbar() {
                 quantity: item.quantity,
             })),
             total: cartTotal,
+            user_id: userId,
             date: new Date().toISOString(),
         };
 

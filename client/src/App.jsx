@@ -15,8 +15,9 @@ import { CartProvider } from "./contexts/CartContext";
 import PublicRoute from "./routes/PublicRoute";
 import PrivateRoute from "./routes/PrivateRoute";
 import AdminDashboard from "./routes/admin/AdminDashboard";
-import AdminSaveProduct from "./routes/admin/AdminSaveProduct";
+import AdminSaveProduct from "./routes/admin/saves/AdminSaveProduct";
 import Orders from "./routes/orders/Orders";
+import AdminSaveUser from "./routes/admin/saves/AdminSaveUser";
 
 export default function App() {
     const [products, setProducts] = useState([]);
@@ -58,8 +59,10 @@ export default function App() {
                     {/* Admin pages */}
                     <Route path="/admin" element={<PrivateRoute isAdmin={true} />}>
                         <Route index element={<AdminDashboard />} />
-                        <Route path="create" element={<AdminSaveProduct />} />
-                        <Route path="edit/:id" element={<AdminSaveProduct />} /> 
+                        <Route path="product/create" element={<AdminSaveProduct />} />
+                        <Route path="product/edit/:id" element={<AdminSaveProduct />} /> 
+                        <Route path="users/create" element={<AdminSaveUser />} />
+                        <Route path="users/edit/:id" element={<AdminSaveUser />} /> 
                     </Route>
 
                     {/* Not found */}

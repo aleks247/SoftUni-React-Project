@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import { get, post, put } from "../../utils/request";
-import styles from "./Admin.module.css";
+import { get, post, put } from "../../../utils/request";
+import styles from "./../Admin.module.css";
 
 export default function AdminSaveProduct() {
     const { id } = useParams();
